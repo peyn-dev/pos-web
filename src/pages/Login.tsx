@@ -12,12 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { loginUser } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +49,9 @@ export default function Login() {
             Enter your email below to login to your account
           </CardDescription>
           <CardAction>
-            <Button variant="link">Sign Up</Button>
+            <Button variant="link" onClick={() => navigate("/register")}>
+              Sign Up
+            </Button>
           </CardAction>
         </CardHeader>
         <CardContent>
@@ -81,10 +85,11 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? "Logging in..." : "Login"}
-                </Button>
+                <CardFooter className="flex-col gap-2 pt-3">
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading ? "Logging in..." : "Login"}
+                  </Button>
+                </CardFooter>
                 <div className="text-center">
                   {error && <p className="text-md text-red-500">{error}</p>}
                 </div>
@@ -92,7 +97,6 @@ export default function Login() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex-col gap-2"></CardFooter>
       </Card>
     </div>
   );
