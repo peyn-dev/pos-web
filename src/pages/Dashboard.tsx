@@ -8,7 +8,7 @@ export default function Dashboard() {
       <Button
         onClick={() => {
           logoutUser();
-          window.location.href = "/login";
+          window.location.href = "/";
         }}
       >
         Logout
