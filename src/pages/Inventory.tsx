@@ -71,6 +71,7 @@ export default function Inventory() {
     sku: "",
     title: "",
     unit: "pcs" as UnitOfMeasure,
+    category: "General",
     costPrice: "",
     sellingPrice: "",
     stock: "",
@@ -99,7 +100,7 @@ export default function Inventory() {
   }, [loadData])
 
   function resetForm() {
-    setForm({ sku: "", title: "", unit: "pcs", costPrice: "", sellingPrice: "", stock: "", threshold: "" })
+    setForm({ sku: "", title: "", unit: "pcs", category: "General", costPrice: "", sellingPrice: "", stock: "", threshold: "" })
   }
 
   function resetAdjustForm() {
@@ -113,6 +114,7 @@ export default function Inventory() {
       sku: form.sku,
       title: form.title,
       unit: form.unit,
+      category: form.category,
       costPrice: parseFloat(form.costPrice) || 0,
       sellingPrice: parseFloat(form.sellingPrice) || 0,
       stock: parseInt(form.stock) || 0,
@@ -257,7 +259,27 @@ export default function Inventory() {
                   <Input id="sku" placeholder="e.g. SKU-006" value={form.sku} onChange={(e) => setForm((f) => ({ ...f, sku: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="unit">Unit of Measure</Label>
+                  <Label htmlFor="category">Category</Label>
+                  <Select value={form.category} onValueChange={(v) => setForm((f) => ({ ...f, category: v }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Food">Food</SelectItem>
+                      <SelectItem value="Beverage">Beverage</SelectItem>
+                      <SelectItem value="Stationery">Stationery</SelectItem>
+                      <SelectItem value="General">General</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="title">Product Title</Label>
+                <Input id="title" placeholder="e.g. Organic Honey 500g" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="unit">Unit</Label>
                   <Select value={form.unit} onValueChange={(v) => setForm((f) => ({ ...f, unit: v as UnitOfMeasure }))}>
                     <SelectTrigger>
                       <SelectValue />
@@ -269,18 +291,12 @@ export default function Inventory() {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="title">Product Title</Label>
-                <Input id="title" placeholder="e.g. Organic Honey 500g" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="costPrice">Cost Price ($)</Label>
+                  <Label htmlFor="costPrice">Cost ($)</Label>
                   <Input id="costPrice" type="number" step="0.01" min="0" placeholder="0.00" value={form.costPrice} onChange={(e) => setForm((f) => ({ ...f, costPrice: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="sellingPrice">Selling Price ($)</Label>
+                  <Label htmlFor="sellingPrice">Sell ($)</Label>
                   <Input id="sellingPrice" type="number" step="0.01" min="0" placeholder="0.00" value={form.sellingPrice} onChange={(e) => setForm((f) => ({ ...f, sellingPrice: e.target.value }))} />
                 </div>
               </div>

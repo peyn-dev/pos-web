@@ -11,6 +11,7 @@ export interface Product {
   sellingPrice: number;
   stock: number;
   threshold: number;
+  category: string;
 }
 
 export type AdjustmentReason = "damaged" | "discrepancy_theft" | "promo_display";
@@ -26,11 +27,11 @@ export interface Adjustment {
 }
 
 const defaultProducts: Product[] = [
-  { id: "1", sku: "SKU-001", title: "Premium Coffee Beans 250g", unit: "pcs", costPrice: 4.50, sellingPrice: 8.99, stock: 3, threshold: 10 },
-  { id: "2", sku: "SKU-002", title: "Organic Green Tea 20 bags", unit: "box", costPrice: 2.20, sellingPrice: 5.49, stock: 25, threshold: 10 },
-  { id: "3", sku: "SKU-003", title: "Dark Chocolate 100g", unit: "pcs", costPrice: 1.80, sellingPrice: 3.99, stock: 0, threshold: 15 },
-  { id: "4", sku: "SKU-004", title: "Almond Milk 1L", unit: "liter", costPrice: 1.50, sellingPrice: 3.49, stock: 12, threshold: 8 },
-  { id: "5", sku: "SKU-005", title: "Granola 500g", unit: "pcs", costPrice: 3.00, sellingPrice: 6.99, stock: 8, threshold: 10 },
+  { id: "1", sku: "SKU-001", title: "Premium Coffee Beans 250g", unit: "pcs", costPrice: 4.50, sellingPrice: 8.99, stock: 3, threshold: 10, category: "Food" },
+  { id: "2", sku: "SKU-002", title: "Organic Green Tea 20 bags", unit: "box", costPrice: 2.20, sellingPrice: 5.49, stock: 25, threshold: 10, category: "Beverage" },
+  { id: "3", sku: "SKU-003", title: "Dark Chocolate 100g", unit: "pcs", costPrice: 1.80, sellingPrice: 3.99, stock: 0, threshold: 15, category: "Food" },
+  { id: "4", sku: "SKU-004", title: "Almond Milk 1L", unit: "liter", costPrice: 1.50, sellingPrice: 3.49, stock: 12, threshold: 8, category: "Beverage" },
+  { id: "5", sku: "SKU-005", title: "Granola 500g", unit: "pcs", costPrice: 3.00, sellingPrice: 6.99, stock: 8, threshold: 10, category: "Food" },
 ];
 
 export function generateId(): string {

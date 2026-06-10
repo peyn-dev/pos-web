@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button"
 import {
   LayoutDashboard,
   Package,
+  ShoppingCart,
   Receipt,
   BarChart3,
   Settings,
   Menu,
   ChevronLeft,
   LogOut,
+  Sun,
+  Moon,
 } from "lucide-react"
 import { logoutUser } from "@/lib/auth"
 import { cn } from "@/lib/utils"
@@ -20,6 +23,7 @@ const SIDEBAR_CLOSED = 60
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { label: "Cashier", icon: ShoppingCart, path: "/cashier" },
   { label: "Inventory", icon: Package, path: "/inventory" },
   { label: "Sales History & Receipts", icon: Receipt, path: "/sales" },
   { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics" },
@@ -129,7 +133,7 @@ export default function AppLayout() {
             <ThemeToggle />
           </div>
         </header>
-        <main className="flex-1 p-4 sm:p-6 overflow-auto">
+        <main className="flex-1 p-4 sm:p-6">
           <Outlet />
         </main>
       </div>
