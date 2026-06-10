@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import { dbPromise } from "./db";
+import { getDb } from "./db";
 
 export async function registerUser(email: string, password: string) {
-  const db = await dbPromise;
+  const db = await getDb();
 
   const existing = await db.get("users", email);
   if (existing) {
@@ -18,7 +18,7 @@ export async function registerUser(email: string, password: string) {
 }
 
 export async function loginUser(email: string, password: string) {
-  const db = await dbPromise;
+  const db = await getDb();
   const user = await db.get("users", email);
 
   if (!user) {

@@ -1,5 +1,5 @@
+import { useState } from "react"
 import { Outlet, useNavigate, useLocation } from "react-router-dom"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import {
   LayoutDashboard,
@@ -8,79 +8,127 @@ import {
   BarChart3,
   Settings,
   Menu,
+  ChevronLeft,
   LogOut,
 } from "lucide-react"
 import { logoutUser } from "@/lib/auth"
 import { cn } from "@/lib/utils"
+
+const SIDEBAR_OPEN = 240
+const SIDEBAR_CLOSED = 60
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
   { label: "Inventory", icon: Package, path: "/inventory" },
   { label: "Sales History & Receipts", icon: Receipt, path: "/sales" },
   { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics" },
-  { label: "User & Settings Configuration", icon: Settings, path: "/settings" },
+  { label: "User & Settings", icon: Settings, path: "/settings" },
 ]
 
 export default function AppLayout() {
+  const [open, setOpen] = useState(true)
   const navigate = useNavigate()
   const location = useLocation()
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="shrink-0">
-              <Menu className="size-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="flex w-72 flex-col p-0">
-            <div className="flex h-14 items-center border-b px-6 font-semibold">
-              POS System
-            </div>
-            <nav className="flex-1 space-y-1 p-2">
-              {navItems.map((item) => {
-                const Icon = item.icon
-                const active = location.pathname === item.path
-                return (
-                  <Button
-                    key={item.path}
-                    variant={active ? "secondary" : "ghost"}
-                    className={cn(
-                      "w-full justify-start gap-3",
-                      active && "bg-secondary font-medium"
-                    )}
-                    onClick={() => navigate(item.path)}
-                  >
-                    <Icon className="size-4" />
-                    {item.label}
-                  </Button>
-                )
-              })}
-            </nav>
-            <div className="border-t p-2">
+    <div className="flex min-h-screen bg-background">
+      <aside
+        className="sticky top-0 h-screen flex flex-col border-r bg-background transition-[width] duration-300 ease-in-out overflow-hidden"
+        style={{ width: open ? SIDEBAR_OPEN : SIDEBAR_CLOSED }}
+      >
+        <div className="relative flex h-14 items-center border-b shrink-0">
+          <span
+            className={cn(
+              "font-semibold whitespace-nowrap pl-4 transition-opacity duration-200",
+              open ? "opacity-100" : "opacity-0"
+            )}
+          >
+            POS System
+          </span>
+          <Button
+            variant="outline"
+            size="icon"
+            className={cn(
+              "absolute top-1/2 -translate-y-1/2 z-10 bg-background transition-all duration-300",
+              open
+                ? "right-8 translate-x-1/2"
+                : "left-1/2 -translate-x-1/2"
+            )}
+            onClick={() => setOpen((p) => !p)}
+          >
+            {<Menu className="size-4" />}
+          </Button>
+        </div>
+
+        <nav className="flex-1 space-y-1 p-2 overflow-hidden">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const active = location.pathname === item.path
+            return (
               <Button
-                variant="ghost"
-                className="w-full justify-start gap-3 text-muted-foreground"
-                onClick={() => {
-                  logoutUser()
-                  navigate("/")
-                }}
+                key={item.path}
+                variant={active ? "secondary" : "ghost"}
+                size={open ? "default" : "icon"}
+                title={!open ? item.label : undefined}
+                className={cn(
+                  "shrink-0",
+                  open ? "w-full justify-start gap-3" : "w-full justify-center",
+                  active && "bg-secondary font-medium"
+                )}
+                onClick={() => navigate(item.path)}
               >
-                <LogOut className="size-4" />
-                Logout
+                <Icon className="size-4 shrink-0" />
+                <span
+                  className={cn(
+                    "overflow-hidden transition-[opacity,width] duration-200",
+                    open ? "opacity-100 w-auto" : "opacity-0 w-0"
+                  )}
+                >
+                  {item.label}
+                </span>
               </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
-        <span className="font-semibold">
-          {navItems.find((i) => i.path === location.pathname)?.label ?? "POS"}
-        </span>
-      </header>
-      <main className="p-4 sm:p-6">
-        <Outlet />
-      </main>
+            )
+          })}
+        </nav>
+
+        <div className="border-t p-2 overflow-hidden">
+          <Button
+            variant="ghost"
+            size={open ? "default" : "icon"}
+            title={!open ? "Logout" : undefined}
+            className={cn(
+              "shrink-0",
+              open ? "w-full justify-start gap-3" : "w-full justify-center",
+              "text-muted-foreground"
+            )}
+            onClick={() => {
+              logoutUser()
+              navigate("/")
+            }}
+          >
+            <LogOut className="size-4 shrink-0" />
+            <span
+              className={cn(
+                "overflow-hidden transition-[opacity,width] duration-200",
+                open ? "opacity-100 w-auto" : "opacity-0 w-0"
+              )}
+            >
+              Logout
+            </span>
+          </Button>
+        </div>
+      </aside>
+
+      <div className="flex flex-1 flex-col min-w-0">
+        <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
+          <h1 className="font-semibold truncate">
+            {navItems.find((i) => i.path === location.pathname)?.label ?? "POS"}
+          </h1>
+        </header>
+        <main className="flex-1 p-4 sm:p-6 overflow-auto">
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }
