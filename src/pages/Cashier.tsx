@@ -24,7 +24,7 @@ import {
   Percent,
   Banknote,
   CreditCard,
- Split,
+  Split,
   Receipt,
 } from "lucide-react"
 
@@ -76,6 +76,13 @@ export default function Cashier() {
   useEffect(() => {
     loadCatalog()
   }, [loadCatalog])
+
+  useEffect(() => {
+    if (categories.includes("All")) {
+      setCategory("All")
+    }
+  }, [catalog])
+  
   const [checkoutOpen, setCheckoutOpen] = useState(false)
   const [discountOpen, setDiscountOpen] = useState(false)
   const [discountPercent, setDiscountPercent] = useState(0)
@@ -85,15 +92,21 @@ export default function Cashier() {
 
   const filteredProducts = useMemo(() => {
     return catalog.filter((item) => {
-      const matchCategory = category === "All" || item.category === category
+      const matchCategory =
+        category === "All" ||
+        item.category?.trim().toLowerCase() ===
+        category.trim().toLowerCase()
+
       const q = search.toLowerCase()
+
       const matchSearch =
         !q ||
         item.name.toLowerCase().includes(q) ||
         item.sku.toLowerCase().includes(q)
+
       return matchCategory && matchSearch
     })
-  }, [category, search])
+  }, [catalog, category, search])
 
   const subtotal = useMemo(
     () => cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
