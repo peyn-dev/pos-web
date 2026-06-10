@@ -13,6 +13,7 @@ import {
 } from "lucide-react"
 import { logoutUser } from "@/lib/auth"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const SIDEBAR_OPEN = 240
 const SIDEBAR_CLOSED = 60
@@ -124,6 +125,9 @@ export default function AppLayout() {
           <h1 className="font-semibold truncate">
             {navItems.find((i) => i.path === location.pathname)?.label ?? "POS"}
           </h1>
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
         </header>
         <main className="flex-1 p-4 sm:p-6 overflow-auto">
           <Outlet />

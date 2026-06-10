@@ -8,11 +8,13 @@ import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Register from "./pages/Register";
 import AppLayout from "./components/layout/AppLayout";
+import { ThemeProvider } from "./components/theme-provider";
 import { ProtectedRoute } from "./routes/ProtectRoute";
 import { PublicRoute } from "./routes/PublicRoutes";
 
 function App() {
   return (
+    <ThemeProvider defaultTheme="system" storageKey="pos-web-ui-theme">
     <BrowserRouter>
       <Routes>
         <Route
@@ -39,6 +41,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

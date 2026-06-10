@@ -40,8 +40,8 @@ import {
 
 function stockStatus(stock: number, threshold: number): { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className: string } {
   if (stock === 0) return { label: "Out of Stock", variant: "destructive", className: "" }
-  if (stock <= threshold) return { label: "Low Stock", variant: "secondary", className: "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-100" }
-  return { label: "In Stock", variant: "default", className: "bg-green-100 text-green-800 border-green-300 hover:bg-green-100" }
+  if (stock <= threshold) return { label: "Low Stock", variant: "secondary", className: "bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-100 dark:bg-amber-900/60 dark:text-amber-300 dark:border-amber-700" }
+  return { label: "In Stock", variant: "default", className: "bg-green-100 text-green-800 border-green-300 hover:bg-green-100 dark:bg-green-900/60 dark:text-green-300 dark:border-green-700" }
 }
 
 const reasonOptions = [
@@ -181,28 +181,28 @@ export default function Inventory() {
       ) : (
         <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg border bg-zinc-50 p-4">
+        <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Package className="size-4" />
             Total Products
           </div>
           <p className="mt-1 text-2xl font-bold">{products.length}</p>
         </div>
-        <div className="rounded-lg border bg-zinc-50 p-4">
+        <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <TrendingDown className="size-4" />
             Low Stock Items
           </div>
-          <p className="mt-1 text-2xl font-bold text-amber-600">{lowStockProducts.length}</p>
+          <p className="mt-1 text-2xl font-bold text-amber-600 dark:text-amber-400">{lowStockProducts.length}</p>
         </div>
-        <div className="rounded-lg border bg-zinc-50 p-4">
+        <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <AlertTriangle className="size-4" />
             Out of Stock
           </div>
-          <p className="mt-1 text-2xl font-bold text-red-600">{outOfStockProducts.length}</p>
+          <p className="mt-1 text-2xl font-bold text-red-600 dark:text-red-400">{outOfStockProducts.length}</p>
         </div>
-        <div className="rounded-lg border bg-zinc-50 p-4">
+        <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <ClipboardList className="size-4" />
             Stock Value
@@ -212,20 +212,20 @@ export default function Inventory() {
       </div>
 
       {(lowStockProducts.length > 0 || outOfStockProducts.length > 0) && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/50">
           <div className="mb-3 flex items-center gap-2">
-            <AlertTriangle className="size-4 text-amber-600" />
-            <span className="font-semibold text-amber-800">Low Stock & Sourcing Alerts</span>
+            <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400" />
+            <span className="font-semibold text-amber-800 dark:text-amber-200">Low Stock & Sourcing Alerts</span>
           </div>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {[...outOfStockProducts, ...lowStockProducts].map((p) => (
-              <div key={p.id} className="flex items-center justify-between rounded-md border border-amber-200 bg-white px-3 py-2 text-sm">
+              <div key={p.id} className="flex items-center justify-between rounded-md border border-amber-200 bg-white px-3 py-2 text-sm dark:border-amber-800 dark:bg-zinc-900">
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">{p.title}</p>
                   <p className="text-xs text-muted-foreground">{p.sku}</p>
                 </div>
                 <div className="ml-3 shrink-0 text-right">
-                  <p className={`font-semibold ${p.stock === 0 ? "text-red-600" : "text-amber-600"}`}>
+                  <p className={`font-semibold ${p.stock === 0 ? "text-red-600 dark:text-red-400" : "text-amber-600 dark:text-amber-400"}`}>
                     {p.stock} {p.unit}
                   </p>
                   <p className="text-xs text-muted-foreground">min {p.threshold}</p>
