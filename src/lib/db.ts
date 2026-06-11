@@ -4,16 +4,15 @@ let _db: IDBPDatabase | null = null;
 
 export async function getDb(): Promise<IDBPDatabase> {
   if (_db) return _db;
-  _db = await openDB("pos-web-db", 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains("users")) {
+  _db = await openDB("pos-web-db", 2, {
+    upgrade(db, oldVersion) {
+      if (oldVersion < 1) {
         db.createObjectStore("users", { keyPath: "email" });
-      }
-      if (!db.objectStoreNames.contains("products")) {
         db.createObjectStore("products", { keyPath: "id" });
-      }
-      if (!db.objectStoreNames.contains("adjustments")) {
         db.createObjectStore("adjustments", { keyPath: "id" });
+      }
+      if (oldVersion < 2) {
+        db.createObjectStore("transactions", { keyPath: "id" });
       }
     },
   });

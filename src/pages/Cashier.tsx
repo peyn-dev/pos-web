@@ -14,6 +14,8 @@ import {
 import { toast } from "sonner"
 import { getAllProducts, getProduct, updateProductStock } from "@/lib/inventory"
 import type { Product } from "@/lib/inventory"
+import { addTransaction, generateId } from "@/lib/transactions"
+import type { Transaction } from "@/lib/transactions"
 import {
   Search,
   Scan,
@@ -198,6 +200,27 @@ export default function Cashier() {
         toast.warning(`${name} is now out of stock`)
       }
     }
+    const transaction: Transaction = {
+      id: generateId(),
+      receiptId: `RCP-${generateId().toUpperCase()}`,
+      items: cart.map((item) => ({
+        productId: item.productId,
+        name: item.name,
+        sku: item.sku,
+        unitPrice: item.unitPrice,
+        quantity: item.quantity,
+      })),
+      subtotal,
+      discountPercent,
+      discountAmount,
+      total,
+      paymentMethod,
+      cashTendered,
+      change,
+      status: "paid",
+      createdAt: new Date(),
+    }
+    await addTransaction(transaction)
     setCompleted(true)
   }
 
