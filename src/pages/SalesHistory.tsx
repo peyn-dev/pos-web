@@ -77,10 +77,10 @@ const dateOptions: { value: DateFilter; label: string }[] = [
 
 function handlePrint(txn: Transaction) {
   const lines = [
-    `      POS System`,
-    `   123 Main Street, Manila`,
-    `   Tel: (02) 1234-5678`,
-    `──────────────────────────────`,
+    `              <strong>POS System</strong>`,
+    `       123 Main Street, Manila`,
+    `         Tel: (02) 1234-5678`,
+    `─────────────────────────────────────`,
     `  ${new Date(txn.createdAt).toLocaleDateString("en-PH", {
       year: "numeric",
       month: "long",
@@ -89,13 +89,13 @@ function handlePrint(txn: Transaction) {
       minute: "2-digit",
     })}`,
     `  Receipt #${txn.receiptId}`,
-    `──────────────────────────────`,
+    `─────────────────────────────────────`,
     `  Item                 Qty  Amt`,
     ...txn.items.map(
       (item) =>
         `  ${item.name.padEnd(20).slice(0, 20)} ${String(item.quantity).padStart(3)} ₱${(item.unitPrice * item.quantity).toFixed(2).padStart(7)}`
     ),
-    `──────────────────────────────`,
+    `─────────────────────────────────────`,
     `  Subtotal             ₱${txn.subtotal.toFixed(2).padStart(8)}`,
     ...(txn.discountPercent > 0
       ? [
@@ -103,7 +103,7 @@ function handlePrint(txn: Transaction) {
         ]
       : []),
     `  Total                ₱${txn.total.toFixed(2).padStart(8)}`,
-    `──────────────────────────────`,
+    `─────────────────────────────────────`,
     `  Payment:  ${txn.paymentMethod.charAt(0).toUpperCase() + txn.paymentMethod.slice(1)}`,
     ...(txn.paymentMethod === "cash"
       ? [
@@ -112,7 +112,7 @@ function handlePrint(txn: Transaction) {
         ]
       : []),
     ``,
-    `       Thank you!`,
+    `      Thank you for your purchase!`,
     ``,
   ]
 
