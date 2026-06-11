@@ -281,7 +281,7 @@ export default function SalesHistory() {
             </Select>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="overflow-y-auto max-h-[420px]">
             <div className="rounded-lg border">
               <Table>
                 <TableHeader>
