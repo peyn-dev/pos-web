@@ -376,7 +376,7 @@ export default function SalesHistory() {
           {!selected ? (
             <div className="flex h-full items-center justify-center px-6 text-center">
               <div>
-                <Receipt className="mx-auto mb-3 size-12 text-muted-foreground/40" />
+                <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded bg-zinc-100 text-3xl font-bold text-muted-foreground/60 dark:bg-zinc-800">₱</div>
                 <p className="text-sm text-muted-foreground">
                   Select a transaction ledger row to inspect receipt details.
                 </p>
