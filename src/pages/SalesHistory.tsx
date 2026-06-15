@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/select"
 import {
   Search,
-  Receipt,
   Printer,
   Mail,
   RotateCcw,

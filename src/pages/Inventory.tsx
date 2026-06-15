@@ -292,11 +292,11 @@ export default function Inventory() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="costPrice">Cost ($)</Label>
+                  <Label htmlFor="costPrice">Cost (₱)</Label>
                   <Input id="costPrice" type="number" step="0.01" min="0" placeholder="0.00" value={form.costPrice} onChange={(e) => setForm((f) => ({ ...f, costPrice: e.target.value }))} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="sellingPrice">Sell ($)</Label>
+                  <Label htmlFor="sellingPrice">Sell (₱)</Label>
                   <Input id="sellingPrice" type="number" step="0.01" min="0" placeholder="0.00" value={form.sellingPrice} onChange={(e) => setForm((f) => ({ ...f, sellingPrice: e.target.value }))} />
                 </div>
               </div>
@@ -348,8 +348,8 @@ export default function Inventory() {
                   <TableCell className="font-mono text-xs">{product.sku}</TableCell>
                   <TableCell className="font-medium">{product.title}</TableCell>
                   <TableCell>{product.unit}</TableCell>
-                  <TableCell className="text-right">${product.costPrice.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">${product.sellingPrice.toFixed(2)}</TableCell>
+                  <TableCell className="text-right">₱{product.costPrice.toFixed(2)}</TableCell>
+                  <TableCell className="text-right">₱{product.sellingPrice.toFixed(2)}</TableCell>
                   <TableCell className="text-right">{product.stock}</TableCell>
                   <TableCell>
                     <Badge variant={status.variant} className={status.className}>

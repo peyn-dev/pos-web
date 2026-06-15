@@ -5,14 +5,11 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Receipt,
   BarChart3,
   Settings,
   Menu,
-  ChevronLeft,
   LogOut,
-  Sun,
-  Moon,
+  History
 } from "lucide-react"
 import { logoutUser } from "@/lib/auth"
 import { cn } from "@/lib/utils"
@@ -25,7 +22,7 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
   { label: "Cashier", icon: ShoppingCart, path: "/cashier" },
   { label: "Inventory", icon: Package, path: "/inventory" },
-  { label: "Sales History & Receipts", icon: Receipt, path: "/sales" },
+  { label: "Sales History & Receipts", icon: History, path: "/sales" },
   { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics" },
   { label: "User & Settings", icon: Settings, path: "/settings" },
 ]
