@@ -28,7 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Loader2, TrendingUp, DollarSign, ShoppingCart, Wallet } from "lucide-react"
+import { Loader2, TrendingUp, PhilippinePeso, ShoppingCart, Wallet } from "lucide-react"
 import { getAllTransactions } from "@/lib/transactions"
 import type { Transaction } from "@/lib/transactions"
 import { getAllProducts } from "@/lib/inventory"
@@ -279,7 +279,7 @@ export default function Analytics() {
         </div>
         <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <DollarSign className="size-4" />
+            <PhilippinePeso className="size-4" />
             Net Profit
           </div>
           <p className="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">

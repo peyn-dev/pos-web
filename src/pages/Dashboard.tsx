@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, TrendingUp, ShoppingCart, AlertTriangle, Banknote, Plus, Package, Receipt } from "lucide-react"
+import { Loader2, TrendingUp, ShoppingCart, AlertTriangle, PhilippinePeso, Plus, Package, Receipt } from "lucide-react"
 import { getAllTransactions } from "@/lib/transactions"
 import type { Transaction } from "@/lib/transactions"
 import { getAllProducts } from "@/lib/inventory"
@@ -157,7 +157,7 @@ export default function Dashboard() {
         </div>
         <div className="rounded-lg border bg-zinc-50 p-4 dark:bg-zinc-900">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Banknote className="size-4" />
+            <PhilippinePeso className="size-4" />
             Cash in Drawer
           </div>
           <p className="mt-1 text-2xl font-bold">₱{cashInDrawer.toFixed(2)}</p>
