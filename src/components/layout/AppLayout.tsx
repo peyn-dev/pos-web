@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Outlet, useNavigate, useLocation } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,26 +11,33 @@ import {
   LogOut,
   History
 } from "lucide-react"
-import { logoutUser } from "@/lib/auth"
+import { logoutUser, getSession } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const SIDEBAR_OPEN = 240
 const SIDEBAR_CLOSED = 60
 
-const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-  { label: "Cashier", icon: ShoppingCart, path: "/cashier" },
-  { label: "Inventory", icon: Package, path: "/inventory" },
-  { label: "Sales History & Receipts", icon: History, path: "/sales" },
-  { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics" },
-  { label: "User & Settings", icon: Settings, path: "/settings" },
+const ALL_NAV = [
+  { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard", roles: ["admin"] },
+  { label: "Cashier", icon: ShoppingCart, path: "/cashier", roles: ["admin", "cashier"] },
+  { label: "Inventory", icon: Package, path: "/inventory", roles: ["admin"] },
+  { label: "Sales History & Receipts", icon: History, path: "/sales", roles: ["admin"] },
+  { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics", roles: ["admin"] },
+  { label: "User & Settings", icon: Settings, path: "/settings", roles: ["admin"] },
 ]
 
 export default function AppLayout() {
   const [open, setOpen] = useState(true)
   const navigate = useNavigate()
   const location = useLocation()
+  const session = getSession()
+  const role = session?.role ?? "cashier"
+
+  const navItems = useMemo(
+    () => ALL_NAV.filter((item) => item.roles.includes(role)),
+    [role]
+  )
 
   return (
     <div className="flex min-h-screen bg-background">
