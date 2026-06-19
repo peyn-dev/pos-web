@@ -534,6 +534,18 @@ export default function Cashier() {
                         </div>
                       )}
                     </div>
+                    <div className="relative">
+                      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">₱</span>
+                      <Input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter cash amount"
+                        className="pl-7"
+                        value={cashTendered || ""}
+                        onChange={(e) => setCashTendered(parseFloat(e.target.value) || 0)}
+                      />
+                    </div>
                     <div className="grid grid-cols-3 gap-2">
                       {PAYMENT_BUTTONS.map((amt) => (
                         <Button key={amt} variant="outline" onClick={() => handleCashQuick(amt)}>
