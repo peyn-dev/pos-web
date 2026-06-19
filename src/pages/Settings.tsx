@@ -32,9 +32,9 @@ export default function Settings() {
   const [error, setError] = useState("")
 
   const [form, setForm] = useState({
-    email: "",
+    username: "",
     password: "",
-    role: "cashier" as "admin" | "cashier",
+    role: "cashier" as "Administrator" | "cashier",
   })
 
   const session = getSession()
@@ -51,16 +51,16 @@ export default function Settings() {
   }, [loadUsers])
 
   function resetForm() {
-    setForm({ email: "", password: "", role: "cashier" })
+    setForm({ username: "", password: "", role: "cashier" })
     setError("")
   }
 
   async function handleAddUser() {
-    if (!form.email || !form.password) return
+    if (!form.username || !form.password) return
     setSaving(true)
     setError("")
     try {
-      await registerUser(form.email, form.password, form.role)
+      await registerUser(form.username, form.password, form.role)
       await loadUsers()
       resetForm()
       setAddOpen(false)
@@ -88,16 +88,16 @@ export default function Settings() {
                 <User className="size-5" />
               </div>
               <div>
-                <p className="font-semibold">{session.email}</p>
+                <p className="font-semibold">{session.username}</p>
                 <Badge
                   variant="outline"
                   className={
-                    session.role === "admin"
+                    session.role === "Administrator"
                       ? "border-purple-300 bg-purple-100 text-purple-800 dark:border-purple-700 dark:bg-purple-900/60 dark:text-purple-300"
                       : "border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
                   }
                 >
-                  {session.role === "admin" ? "Administrator" : "Cashier"}
+                  {session.role === "Administrator" ? "Administrator" : "Cashier"}
                 </Badge>
               </div>
             </div>
@@ -132,14 +132,13 @@ export default function Settings() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  value={form.email}
+                  id="username"
+                  placeholder="jdelacruz"
+                  value={form.username}
                   onChange={(e) =>
-                    setForm((f) => ({ ...f, email: e.target.value }))
+                    setForm((f) => ({ ...f, username: e.target.value }))
                   }
                 />
               </div>
@@ -162,7 +161,7 @@ export default function Settings() {
                   onValueChange={(v) =>
                     setForm((f) => ({
                       ...f,
-                      role: v as "admin" | "cashier",
+                      role: v as "Administrator" | "cashier",
                     }))
                   }
                 >
@@ -171,7 +170,7 @@ export default function Settings() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="cashier">Cashier</SelectItem>
-                    <SelectItem value="admin">Administrator</SelectItem>
+                    <SelectItem value="Administrator">Administrator</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -193,7 +192,7 @@ export default function Settings() {
               </Button>
               <Button
                 onClick={handleAddUser}
-                disabled={!form.email || !form.password || saving}
+                disabled={!form.username || !form.password || saving}
               >
                 {saving ? (
                   <>
@@ -236,18 +235,18 @@ export default function Settings() {
                 </TableRow>
               )}
               {users.map((user) => (
-                <TableRow key={user.email}>
-                  <TableCell className="font-medium">{user.email}</TableCell>
+                <TableRow key={user.username}>
+                  <TableCell className="font-medium">{user.username}</TableCell>
                   <TableCell>
                     <Badge
                       variant="outline"
                       className={
-                        user.role === "admin"
+                        user.role === "Administrator"
                           ? "border-purple-300 bg-purple-100 text-purple-800 dark:border-purple-700 dark:bg-purple-900/60 dark:text-purple-300"
                           : "border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
                       }
                     >
-                      {user.role === "admin" ? "Administrator" : "Cashier"}
+                      {user.role === "Administrator" ? "Administrator" : "Cashier"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">

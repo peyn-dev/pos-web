@@ -10,24 +10,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { loginUser } from "@/lib/auth";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { loginUser, seedDefaultUser } from "@/lib/auth";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    seedDefaultUser()
+  }, [])
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    console.log("Logging in with", email, password);
     try {
-      await loginUser(email, password);
+      await loginUser(username, password);
       window.location.href = "/dashboard";
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -46,25 +47,24 @@ export default function Login() {
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your username below to login to your account
           </CardDescription>
           <CardAction>
-            <Button variant="link" onClick={() => navigate("/register")}>
+            {/* <Button variant="link" onClick={() => navigate("/register")}>
               Sign Up
-            </Button>
+            </Button> */}
           </CardAction>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  placeholder="m@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="username"
+                  value={username}
+                  placeholder="jdelacruz"
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>

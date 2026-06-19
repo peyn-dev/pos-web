@@ -19,12 +19,12 @@ const SIDEBAR_OPEN = 240
 const SIDEBAR_CLOSED = 60
 
 const ALL_NAV = [
-  { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard", roles: ["admin"] },
-  { label: "Cashier", icon: ShoppingCart, path: "/cashier", roles: ["admin", "cashier"] },
-  { label: "Inventory", icon: Package, path: "/inventory", roles: ["admin"] },
-  { label: "Sales History & Receipts", icon: History, path: "/sales", roles: ["admin"] },
-  { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics", roles: ["admin"] },
-  { label: "User & Settings", icon: Settings, path: "/settings", roles: ["admin"] },
+  { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard", roles: ["Administrator"] },
+  { label: "Cashier", icon: ShoppingCart, path: "/cashier", roles: ["Administrator", "cashier"] },
+  { label: "Inventory", icon: Package, path: "/inventory", roles: ["Administrator"] },
+  { label: "Sales History & Receipts", icon: History, path: "/sales", roles: ["Administrator"] },
+  { label: "Analytics & Reporting", icon: BarChart3, path: "/analytics", roles: ["Administrator"] },
+  { label: "User & Settings", icon: Settings, path: "/settings", roles: ["Administrator"] },
 ]
 
 export default function AppLayout() {
@@ -52,7 +52,7 @@ export default function AppLayout() {
               open ? "opacity-100" : "opacity-0"
             )}
           >
-            POS System
+            AJ Gadjets
           </span>
           <Button
             variant="outline"

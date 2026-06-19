@@ -158,10 +158,6 @@ export default function Cashier() {
     setCart((prev) => prev.filter((ci) => ci.productId !== productId))
   }
 
-  function applyDiscount() {
-    setDiscountOpen(false)
-  }
-
   function handleCashQuick(amount: number) {
     setCashTendered((prev) => +((prev * 100 + amount * 100) / 100).toFixed(2))
   }

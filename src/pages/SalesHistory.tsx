@@ -76,9 +76,9 @@ const dateOptions: { value: DateFilter; label: string }[] = [
 
 function handlePrint(txn: Transaction) {
   const lines = [
-    `              <strong>POS System</strong>`,
-    `       123 Main Street, Manila`,
-    `         Tel: (02) 1234-5678`,
+    `              <strong>AJ Gadjets</strong>`,
+    `      Sampaloc 2 Aguinaldo Highway`,
+    `      Corner SM Dasmarinas, Cavite`,
     `─────────────────────────────────────`,
     `  ${new Date(txn.createdAt).toLocaleDateString("en-PH", {
       year: "numeric",
@@ -115,9 +115,17 @@ function handlePrint(txn: Transaction) {
     ``,
   ]
 
-  const win = window.open("", "_blank")
-  if (!win) return
-  win.document.write(`
+  const iframe = document.createElement("iframe")
+  iframe.style.position = "fixed"
+  iframe.style.top = "-9999px"
+  iframe.style.left = "-9999px"
+  iframe.style.width = "80mm"
+  iframe.style.height = "0"
+  iframe.style.border = "none"
+  document.body.appendChild(iframe)
+  const doc = iframe.contentWindow?.document
+  if (!doc) return
+  doc.write(`
 <!DOCTYPE html>
 <html>
 <head>
@@ -141,9 +149,12 @@ function handlePrint(txn: Transaction) {
 </head>
 <body><pre>${lines.join("\n")}</pre></body>
 </html>`)
-  win.document.close()
-  win.focus()
-  setTimeout(() => win.print(), 300)
+  doc.close()
+  iframe.contentWindow?.focus()
+  setTimeout(() => {
+    iframe.contentWindow?.print()
+    setTimeout(() => document.body.removeChild(iframe), 1000)
+  }, 300)
 }
 
 export default function SalesHistory() {
@@ -393,12 +404,12 @@ export default function SalesHistory() {
               <div className="flex-1 overflow-y-auto p-4">
                 <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-sm dark:border-zinc-700/50 dark:bg-zinc-800/50">
                   <div className="mb-3 text-center">
-                    <p className="text-base font-bold">POS System</p>
+                    <p className="text-base font-bold">AJ Gadjets</p>
                     <p className="text-xs text-muted-foreground">
-                      123 Main Street, Manila
+                      Sampaloc 2 Aguinaldo Highway
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Tel: (02) 1234-5678
+                       Corner SM Dasmarinas, Cavite
                     </p>
                     <div className="my-2 border-t border-dashed border-zinc-300 dark:border-zinc-600" />
                     <p className="text-xs text-muted-foreground">

@@ -65,7 +65,7 @@ export default function Inventory() {
   const [addOpen, setAddOpen] = useState(false)
   const [adjustOpen, setAdjustOpen] = useState(false)
   const [adjustTarget, setAdjustTarget] = useState<Product | null>(null)
-  const [saving, setSaving] = useState(false)
+  const [_saving, setSaving] = useState(false)
 
   const [form, setForm] = useState({
     sku: "",

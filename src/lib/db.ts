@@ -4,7 +4,7 @@ let _db: IDBPDatabase | null = null;
 
 export async function getDb(): Promise<IDBPDatabase> {
   if (_db) return _db;
-  _db = await openDB("pos-web-db", 2, {
+  _db = await openDB("pos-web-db", 3, {
     upgrade(db, oldVersion) {
       if (oldVersion < 1) {
         db.createObjectStore("users", { keyPath: "email" });
@@ -13,6 +13,10 @@ export async function getDb(): Promise<IDBPDatabase> {
       }
       if (oldVersion < 2) {
         db.createObjectStore("transactions", { keyPath: "id" });
+      }
+      if (oldVersion < 3) {
+        db.deleteObjectStore("users");
+        db.createObjectStore("users", { keyPath: "username" });
       }
     },
   });
